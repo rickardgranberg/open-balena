@@ -1,7 +1,7 @@
 FROM haproxy:2.9-alpine
 
 VOLUME [ "/certs" ]
-
+USER root
 RUN apk add --update inotify-tools
 
 COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
