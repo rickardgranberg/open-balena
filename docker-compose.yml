@@ -16,7 +16,8 @@ volumes:
   resin-data: {}
   s3-data:
     external: true
-    name: openbalena_s3
+    #name: openbalena_s3
+    name: openbalena_s3_2
 
 x-default-healthcheck: &default-healthcheck
   test: /usr/src/app/docker-hc
