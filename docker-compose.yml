@@ -1,5 +1,4 @@
 ---
-version: '2.4'
 
 volumes:
   builder-certs-ca: {}
@@ -7,11 +6,15 @@ volumes:
   builder-data: {}
   cert-manager-data: {}
   certs-data: {}
-  db-data: {}
+  db-data: 
+    external: true
+    name: openbalena_db
   pki-data: {}
   redis-data: {}
   resin-data: {}
-  s3-data: {}
+  s3-data:
+    external: true
+    name: openbalena_s3
 
 x-default-healthcheck: &default-healthcheck
   test: /usr/src/app/docker-hc
@@ -119,11 +122,11 @@ services:
       - redis
       - s3
     environment:
-      COMMON_REGION: open-balena # using MinIO/S3 (not AWS/S3)
+      COMMON_REGION: us-east-1 # using MinIO/S3 (not AWS/S3)
       HOSTS_CONFIG: REGISTRY2_HOST:registry2,REGISTRY2_TOKEN_AUTH_ISSUER:api,REGISTRY2_TOKEN_AUTH_REALM:api
       REGISTRY2_CACHE_ADDR: redis:6379
       REGISTRY2_CACHE_DB: 1
-      REGISTRY2_CACHE_ENABLED: "true"
+      REGISTRY2_CACHE_ENABLED: "false"
       REGISTRY2_DEBUG_ENABLED: "true"
       REGISTRY2_S3_BUCKET: registry-data
       REGISTRY2_S3_FORCEPATHSTYLE: "true"
@@ -177,6 +180,8 @@ services:
       - certs-data:/certs
       - resin-data:/balena
     environment:
+      COMMON_REGION: us-east-1
+      REGISTRY2_CACHE_ENABLED: "false"
       BUCKETS: registry-data;web-resources
       HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
       TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET
@@ -278,6 +283,8 @@ services:
   tag-sidecar:
     build: src/tag-sidecar
     restart: no
+    profiles: 
+      - test
     environment:
       ENABLED: "true"
     labels:
@@ -292,6 +299,8 @@ services:
     ]
     build: src/balena-tests
     command: /usr/sbin/balena.sh
+    profiles:
+      - test
     environment:
       DOCKER_CERT_PATH: /docker-pki/client
       DOCKER_HOST: docker:2376
@@ -316,6 +325,8 @@ services:
     # https://hub.docker.com/r/qemux/qemu
     # https://github.com/qemus/qemu-docker
     build: src/test-device
+    profiles:
+      - test
     entrypoint:
       - /bin/sh
       - -c
@@ -340,6 +351,8 @@ services:
       *with-network-privileges,
     ]
     image: docker:28.5.2-dind@sha256:2a232a42256f70d78e3cc5d2b5d6b3276710a0de0596c145f627ecfae90282ac
+    profiles:
+      - test
     entrypoint:
       - /bin/sh
       - -c

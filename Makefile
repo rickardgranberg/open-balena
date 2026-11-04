@@ -68,9 +68,15 @@ endif
 	@$(MAKE) showenv
 
 .PHONY: wait
-wait: ## Wait for service
-	@until [[ $$(docker compose ps $(SERVICE) --format json | jq -r '.Health') =~ ^healthy$$ ]]; do printf '.'; sleep 3; done
-	@printf '\n'
+wait: ## Wait for a service to become healthy
+    @cid="$$(docker compose ps -q $(SERVICE) | head -n 1)"; \
+    until [ -n "$$cid" ] && \
+          [ "$$(docker inspect -f '{{if .State.Health}}{{.State.Health.Status}}{{else}}nohealthcheck{{end}}' $$cid 2>/dev/null)" = "healthy" ]; do \
+       printf '.'; \
+       sleep 3; \
+       cid="$$(docker compose ps -q $(SERVICE) | head -n 1)"; \
+    done; \
+    printf '\n'
 
 .PHONY: waitlog
 waitlog: ## Wait for log line
