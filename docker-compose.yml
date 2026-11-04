@@ -6,6 +6,9 @@ volumes:
   builder-data: {}
   cert-manager-data: {}
   certs-data: {}
+  cert-provider:
+    external: true
+    name: openbalena_cert-provider
   db-data: 
     external: true
     name: openbalena_db
@@ -236,25 +239,38 @@ services:
       io.balena.features.balena-socket: 1
       io.balena.features.supervisor-api: 1
 
-  # https://github.com/balena-io/cert-manager
-  # https://certbot.eff.org/docs/using.html
-  # https://certbot-dns-cloudflare.readthedocs.io/
-  cert-manager:
+  cert-provider:
     <<: *base-service
-    build: src/cert-manager
+    build: ../src/cert-provider
     volumes:
-      - cert-manager-data:/etc/letsencrypt
       - certs-data:/certs
-      - resin-data:/balena
+      - cert-provider:/usr/src/app/certs
     depends_on:
       - balena-ca
     environment:
-      # wildcard certificate for reverse proxy
-      SSH_KEY_NAMES: ","
-      SUBJECT_ALTERNATE_NAMES: "*"
-    labels:
-      io.balena.features.balena-api: 1
-      io.balena.features.supervisor-api: 1
+      ACTIVE: true
+      DOMAINS: "api.${DNS_TLD},registry.${DNS_TLD},s3.${DNS_TLD},vpn.${DNS_TLD},tunnel.${DNS_TLD},data.${DNS_TLD},cloudlink.${DNS_TLD}"
+      OUTPUT_PEM: /certs/export/chain.pem
+
+  # # https://github.com/balena-io/cert-manager
+  # # https://certbot.eff.org/docs/using.html
+  # # https://certbot-dns-cloudflare.readthedocs.io/
+  # cert-manager:
+  #   <<: *base-service
+  #   build: src/cert-manager
+  #   volumes:
+  #     - cert-manager-data:/etc/letsencrypt
+  #     - certs-data:/certs
+  #     - resin-data:/balena
+  #   depends_on:
+  #     - balena-ca
+  #   environment:
+  #     # wildcard certificate for reverse proxy
+  #     SSH_KEY_NAMES: ","
+  #     SUBJECT_ALTERNATE_NAMES: "*"
+  #   labels:
+  #     io.balena.features.balena-api: 1
+  #     io.balena.features.supervisor-api: 1
 
   # https://github.com/balena-io/ca-private
   # https://github.com/cloudflare/cfssl/blob/master/doc/api/intro.txt
