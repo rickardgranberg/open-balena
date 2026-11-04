@@ -15,7 +15,7 @@ volumes:
   redis-data: {}
   resin-data: {}
   s3-data:
-    external: true
+    #external: true
     #name: openbalena_s3
     name: openbalena_s3_2
 
