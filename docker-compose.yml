@@ -14,9 +14,10 @@ volumes:
   pki-data: {}
   redis-data: {}
   resin-data: {}
+  s3-data-old:
+    external: true
+    name: openbalena_s3  
   s3-data:
-    #external: true
-    #name: openbalena_s3
     name: openbalena_s3_2
 
 x-default-healthcheck: &default-healthcheck
@@ -180,6 +181,7 @@ services:
     image: balena/open-balena-s3:3.0.65@sha256:092cbdb20156aebae107f66ee3ae48ab91253c832789ccde4c120a91c6ee7716
     volumes:
       - s3-data:/export
+      - s3-data-old:/export-old
       - certs-data:/certs
       - resin-data:/balena
     environment:
