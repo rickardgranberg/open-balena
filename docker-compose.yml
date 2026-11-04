@@ -248,7 +248,8 @@ services:
       - balena-ca
     environment:
       ACTIVE: true
-      DOMAINS: "api.${DNS_TLD},registry.${DNS_TLD},s3.${DNS_TLD},vpn.${DNS_TLD},tunnel.${DNS_TLD},data.${DNS_TLD},cloudlink.${DNS_TLD}"
+      DOMAINS: "api.${DNS_TLD},registry.${DNS_TLD},s3.${DNS_TLD},vpn.${DNS_TLD},tunnel.${DNS_TLD}"
+      #DOMAINS: "api.${DNS_TLD},registry.${DNS_TLD},s3.${DNS_TLD},vpn.${DNS_TLD},tunnel.${DNS_TLD},data.${DNS_TLD},cloudlink.${DNS_TLD}"
       OUTPUT_PEM: /certs/export/chain.pem
 
   # # https://github.com/balena-io/cert-manager
