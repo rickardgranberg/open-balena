@@ -7,7 +7,6 @@ volumes:
   cert-manager-data: {}
   certs-data: {}
   cert-provider:
-    external: true
     name: openbalena_cert-provider_2
   db-data: 
     external: true
