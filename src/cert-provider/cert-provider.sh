@@ -179,8 +179,8 @@ while ! waitForOnline "${ACME_DOMAINS[0]}"; do
 done
 
 if ! lastAcquiredCertFor "production"; then
-    acquireCertificate "staging" || logErrorAndStop "Unable to acquire a staging certificate."
-    waitToSeeStagingCert || logErrorAndStop "Unable to detect certificate change over. Cannot issue a production certificate."
+    #acquireCertificate "staging" || logErrorAndStop "Unable to acquire a staging certificate."
+    #waitToSeeStagingCert || logErrorAndStop "Unable to detect certificate change over. Cannot issue a production certificate."
     acquireCertificate "production" "true" || logErrorAndStop "Unable to acquire a production certificate."
 fi
 
