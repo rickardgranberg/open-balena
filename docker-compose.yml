@@ -241,7 +241,7 @@ services:
 
   cert-provider:
     <<: *base-service
-    build: ../src/cert-provider
+    build: src/cert-provider
     volumes:
       - certs-data:/certs
       - cert-provider:/usr/src/app/certs
