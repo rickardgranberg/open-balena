@@ -180,8 +180,8 @@ services:
     ]
     image: balena/open-balena-s3:3.0.65@sha256:092cbdb20156aebae107f66ee3ae48ab91253c832789ccde4c120a91c6ee7716
     volumes:
-      - s3-data:/export
-      - s3-data-old:/export-old
+      - s3-data:/export-new
+      - s3-data-old:/export
       - certs-data:/certs
       - resin-data:/balena
     environment:
