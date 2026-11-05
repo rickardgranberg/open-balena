@@ -1,4 +1,72 @@
 - commits:
+    - subject: Queue open-PR balena pushes in one concurrency group
+      hash: edf2d3a5f83b6b9028b1a74b80fe7d427a0cbe61
+      body: |
+        Parallel PRs hit API rate limits in `balena push`. Pass the new
+        Flowzone input on open PRs only, so merged-PR finalize and master
+        pushes never wait behind them.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+      nested: []
+  version: 4.1.995
+  title: ""
+  date: 2026-11-04T19:52:53.267Z
+- commits:
+    - subject: Update balena/open-balena-vpn Docker tag to v12.4.5
+      hash: ea24358baf05660ab55e3bd1b0e16eb0545ccc14
+      body: |
+        Update balena/open-balena-vpn from 12.4.1 to 12.4.5
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.994
+  title: ""
+  date: 2026-11-04T05:28:48.878Z
+- commits:
+    - subject: Update balena/open-balena-api Docker tag to v52
+      hash: 32441fae1ee7311f0b3b9a93dcdae8402c970ee5
+      body: |
+        Update balena/open-balena-api from 50.1.2 to 52.2.3
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.993
+  title: ""
+  date: 2026-11-03T22:23:15.079Z
+- commits:
+    - subject: Reduce the DEVICE_TYPES cache timeouts during tests
+      hash: 488a38c5ce9c6d7e4a640f24f40fcdf521170ad2
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Thodoris Greasidis
+      nested: []
+  version: 4.1.992
+  title: ""
+  date: 2026-11-03T21:48:14.168Z
+- commits:
+    - subject: Update dependency balena-io/balena-cli to v25.2.7
+      hash: 4b375549ea93ee6edc246ff52ee102f2ab73ff3c
+      body: |
+        Update balena-io/balena-cli from 25.2.6 to 25.2.7
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: balena-renovate[bot]
+      nested: []
+  version: 4.1.991
+  title: ""
+  date: 2026-11-02T16:25:21.260Z
+- commits:
     - subject: Update balena/open-balena-vpn Docker tag to v12.4.1
       hash: 0613e68e31606c78adbe4200f7df78315e9f8bcb
       body: |

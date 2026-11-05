@@ -83,7 +83,7 @@ services:
       *with-default-privileges,
       *with-default-volumes,
     ]
-    image: balena/open-balena-api:50.1.2@sha256:1fa98b017a272d898a2ad9834bad571fdea5743aea8f5271a606b270b1ad0d74
+    image: balena/open-balena-api:52.2.3@sha256:f8859139063f122e43a40e03bbfcd12d273dd65933d69c6b7f8be8d0d1123397
     depends_on:
       - db
       - redis
@@ -147,7 +147,7 @@ services:
       *with-network-privileges,
       *with-default-privileges,
     ]
-    image: balena/open-balena-vpn:12.4.1@sha256:bbb413ef5a22dc1436399d0b51d75d6433a84f4246861c869e02876be3213f60
+    image: balena/open-balena-vpn:12.4.5@sha256:ac93fb5d6ac53578b6224275465f86f90157372edf501e08c724537181061a4b
     depends_on:
       - api
     environment:
