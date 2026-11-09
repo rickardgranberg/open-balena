@@ -14,9 +14,6 @@ volumes:
   pki-data: {}
   redis-data: {}
   resin-data: {}
-  s3-data-old:
-    external: true
-    name: openbalena_s3  
   s3-data:
     name: openbalena_s3_2
 
@@ -181,7 +178,6 @@ services:
     image: balena/open-balena-s3:3.0.65@sha256:092cbdb20156aebae107f66ee3ae48ab91253c832789ccde4c120a91c6ee7716
     volumes:
       - s3-data:/export
-      - s3-data-old:/export-old
       - certs-data:/certs
       - resin-data:/balena
     environment:
@@ -191,24 +187,6 @@ services:
       HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
       TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET
 
-  # s3-old:
-  #   image: balena/open-balena-s3:v2.28.32
-  #   cap_add:
-  #     - SYS_ADMIN
-  #     - SYS_RESOURCE
-  #   tmpfs:
-  #     - /run
-  #     - /sys/fs/cgroup
-  #   privileged: true
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - s3-data-old:/export
-  #   environment:
-  #     CONFD_BACKEND: ENV
-  #     S3_MINIO_ACCESS_KEY: ${OPENBALENA_S3_ACCESS_KEY}
-  #     S3_MINIO_SECRET_KEY: ${OPENBALENA_S3_SECRET_KEY}
-  #     BUCKETS: registry-data
   # https://hub.docker.com/_/redis
   redis:
     <<: *base-service
@@ -269,7 +247,6 @@ services:
       - balena-ca
     environment:
       ACTIVE: true
-      #DOMAINS: "api.${DNS_TLD},registry.${DNS_TLD},s3.${DNS_TLD},vpn.${DNS_TLD},tunnel.${DNS_TLD}"
       DOMAINS: "api.${DNS_TLD},registry.${DNS_TLD},registry2.${DNS_TLD},s3.${DNS_TLD},vpn.${DNS_TLD},tunnel.${DNS_TLD},data.${DNS_TLD},cloudlink.${DNS_TLD}"
       OUTPUT_PEM: /certs/export/chain.pem
 
