@@ -193,6 +193,15 @@ services:
 
   s3-old:
     image: balena/open-balena-s3:v2.28.32
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RESOURCE
+    environment:
+      - CONFD_BACKEND=ENV
+    tmpfs:
+      - /run
+      - /sys/fs/cgroup
+    privileged: true
     env_file:
       - .env
     volumes:
