@@ -191,24 +191,24 @@ services:
       HOSTS_CONFIG: REGISTRY2_S3_REGION_ENDPOINT:s3,WEBRESOURCES_S3_HOST:s3
       TOKENS_CONFIG: REGISTRY2_S3_KEY:hex,REGISTRY2_S3_SECRET:hex,S3_MINIO_ACCESS_KEY:REGISTRY2_S3_KEY,S3_MINIO_SECRET_KEY:REGISTRY2_S3_SECRET,WEBRESOURCES_S3_ACCESS_KEY:REGISTRY2_S3_KEY,WEBRESOURCES_S3_SECRET_KEY:REGISTRY2_S3_SECRET
 
-  s3-old:
-    image: balena/open-balena-s3:v2.28.32
-    cap_add:
-      - SYS_ADMIN
-      - SYS_RESOURCE
-    tmpfs:
-      - /run
-      - /sys/fs/cgroup
-    privileged: true
-    env_file:
-      - .env
-    volumes:
-      - s3-data-old:/export
-    environment:
-      CONFD_BACKEND: ENV
-      S3_MINIO_ACCESS_KEY: ${OPENBALENA_S3_ACCESS_KEY}
-      S3_MINIO_SECRET_KEY: ${OPENBALENA_S3_SECRET_KEY}
-      BUCKETS: registry-data
+  # s3-old:
+  #   image: balena/open-balena-s3:v2.28.32
+  #   cap_add:
+  #     - SYS_ADMIN
+  #     - SYS_RESOURCE
+  #   tmpfs:
+  #     - /run
+  #     - /sys/fs/cgroup
+  #   privileged: true
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - s3-data-old:/export
+  #   environment:
+  #     CONFD_BACKEND: ENV
+  #     S3_MINIO_ACCESS_KEY: ${OPENBALENA_S3_ACCESS_KEY}
+  #     S3_MINIO_SECRET_KEY: ${OPENBALENA_S3_SECRET_KEY}
+  #     BUCKETS: registry-data
   # https://hub.docker.com/_/redis
   redis:
     <<: *base-service
